@@ -82,8 +82,8 @@ namespace CollectionViewDemos.ViewModels
                 Console.WriteLine(e);
                 throw;
             }
+            //this part is not cool
             Animals = new List<AnimalGroup>(Animals);
-            //OnPropertyChanged(nameof(Animals));
         }
 
         private AnimalGroup CreateAnimalGroup(string name, List<Animal> animalList)
