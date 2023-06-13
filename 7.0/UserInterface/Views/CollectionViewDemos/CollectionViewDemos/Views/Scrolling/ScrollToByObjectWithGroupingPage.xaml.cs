@@ -15,9 +15,9 @@ namespace CollectionViewDemos.Views
         void OnButtonClicked(object sender, EventArgs e)
         {
             GroupedAnimalsViewModel viewModel = BindingContext as GroupedAnimalsViewModel;
-            AnimalGroup group = viewModel.Animals.FirstOrDefault(a => a.Name == "Monkeys");
-            Animal monkey = group.FirstOrDefault(m => m.Name == "Proboscis Monkey");
-            collectionView.ScrollTo(monkey, group, (ScrollToPosition)enumPicker.SelectedItem, animateSwitch.IsToggled);
+            //AnimalGroup group = viewModel.Animals.FirstOrDefault(a => a.Name == "Monkeys");
+            //Animal monkey = group.FirstOrDefault(m => m.Name == "Proboscis Monkey");
+            //collectionView.ScrollTo(monkey, group, (ScrollToPosition)enumPicker.SelectedItem, animateSwitch.IsToggled);
         }
 
         void OnCollectionViewScrolled(object sender, ItemsViewScrolledEventArgs e)

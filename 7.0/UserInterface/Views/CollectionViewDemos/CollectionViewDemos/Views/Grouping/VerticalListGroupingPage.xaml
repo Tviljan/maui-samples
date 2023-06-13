@@ -1,38 +1,110 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:collectionViewDemos="clr-namespace:CollectionViewDemos"
              x:Class="CollectionViewDemos.Views.VerticalListGroupingPage"
              Title="Grouping (with DataTemplates)">
-    <StackLayout Margin="20">
+        <ContentPage.Resources>
+        <DataTemplate x:Key="BearTemplate">
+            <Grid Padding="10" BackgroundColor="WhiteSmoke">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.RowSpan="2" 
+                       Source="{Binding ImageUrl}" 
+                       Aspect="AspectFill"
+                       HeightRequest="60" 
+                       WidthRequest="60" />
+                <Label Grid.Column="1" 
+                       Text="{Binding Name}" 
+                       FontAttributes="Bold" />
+                <Label Grid.Row="1"
+                       Grid.Column="1" 
+                       Text="{Binding Location}"
+                       FontAttributes="Italic" 
+                       VerticalOptions="End" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DogTemplate">
+            <Grid Padding="10" BackgroundColor="Brown">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.RowSpan="2" 
+                           Source="{Binding ImageUrl}" 
+                           Aspect="AspectFill"
+                           HeightRequest="60" 
+                           WidthRequest="60" />
+                <Label Grid.Column="1" 
+                           Text="{Binding Name}" 
+                           FontAttributes="Bold" />
+                <Label Grid.Row="1"
+                           Grid.Column="1" 
+                           Text="{Binding Location}"
+                           FontAttributes="Italic" 
+                           VerticalOptions="End" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CatTemplate">
+            <Grid Padding="10" BackgroundColor="DarkGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.RowSpan="2" 
+                       Source="{Binding ImageUrl}" 
+                       Aspect="AspectFill"
+                       HeightRequest="60" 
+                       WidthRequest="60" />
+                <Label Grid.Column="1" 
+                       Text="{Binding Name}" 
+                       FontAttributes="Bold" />
+                <Label Grid.Row="1"
+                       Grid.Column="1" 
+                       Text="{Binding Location}"
+                       FontAttributes="Italic" 
+                       VerticalOptions="End" />
+            </Grid>
+        </DataTemplate>
+
+        <collectionViewDemos:AnimalDataTemplateSelector x:Key="AnimalDataTemplateSelector"
+                                               BearTemplate="{StaticResource BearTemplate}"
+                                                DogTemplate="{StaticResource DogTemplate}"
+                                                CatTemplate="{StaticResource CatTemplate}" 
+                                            />
+    </ContentPage.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+
+        <!-- CollectionView for animal groups -->
         <CollectionView ItemsSource="{Binding Animals}"
-                        IsGrouped="true">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.RowSpan="2" 
-                               Source="{Binding ImageUrl}" 
-                               Aspect="AspectFill"
-                               HeightRequest="60" 
-                               WidthRequest="60" />
-                        <Label Grid.Column="1" 
-                               Text="{Binding Name}" 
-                               FontAttributes="Bold" />
-                        <Label Grid.Row="1"
-                               Grid.Column="1" 
-                               Text="{Binding Location}"
-                               FontAttributes="Italic" 
-                               VerticalOptions="End" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                        IsGrouped="true"
+                        ItemTemplate="{StaticResource AnimalDataTemplateSelector}"
+                        
+                        Grid.Row="0"
+                        Grid.Column="0">
+            <!-- Group header template -->
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
                     <Label Text="{Binding Name}"
@@ -41,6 +113,8 @@
                            FontAttributes="Bold" />
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
+
+            <!-- Group footer template -->
             <CollectionView.GroupFooterTemplate>
                 <DataTemplate>
                     <Label Text="{Binding Count, StringFormat='Total animals: {0:D}'}"
@@ -48,5 +122,13 @@
                 </DataTemplate>
             </CollectionView.GroupFooterTemplate>
         </CollectionView>
-    </StackLayout>
+
+        <!-- Button bound to LoadMoreCommand -->
+        <Button Grid.Row="1" Text="Load More"
+                Command="{Binding LoadMoreCommand}"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand" />
+
+
+    </Grid>
 </ContentPage>

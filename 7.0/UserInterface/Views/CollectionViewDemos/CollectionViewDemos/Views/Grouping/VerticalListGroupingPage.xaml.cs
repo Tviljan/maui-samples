@@ -9,5 +9,11 @@ namespace CollectionViewDemos.Views
             InitializeComponent();
             BindingContext = new GroupedAnimalsViewModel();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            (BindingContext as GroupedAnimalsViewModel).LoadAnimals();
+        }
     }
 }

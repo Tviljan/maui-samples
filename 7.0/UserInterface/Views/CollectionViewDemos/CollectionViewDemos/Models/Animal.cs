@@ -1,6 +1,8 @@
-﻿namespace CollectionViewDemos.Models
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace CollectionViewDemos.Models
 {
-    public class Animal
+    public abstract class Animal : ObservableObject
     {
         public string Name { get; set; }
         public string Location { get; set; }
@@ -11,5 +13,18 @@
         {
             return Name;
         }
+    }
+
+    public class Bear : Animal
+    {
+
+    }
+    public class Dog : Animal
+    {
+
+    }
+    public class Cat : Animal
+    {
+
     }
 }
